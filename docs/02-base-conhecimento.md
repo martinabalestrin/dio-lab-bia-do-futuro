@@ -13,8 +13,6 @@
 
 ## Adaptações nos Dados
 
-> Você modificou ou expandiu os dados mockados? Descreva aqui.
-
 O produto Fundo Imobiliário (FII) substituiu o Fundo Multimercado.
 
 ---
@@ -22,7 +20,6 @@ O produto Fundo Imobiliário (FII) substituiu o Fundo Multimercado.
 ## Estratégia de Integração
 
 ### Como os dados são carregados?
-> Descreva como seu agente acessa a base de conhecimento.
 
 Existem duas possibilidades, injetar os dados diretamente no prompt (Crtl + C, Crtl + V) ou carregar os arquivos via código, como no exemplo abaixo:
 
@@ -30,15 +27,18 @@ Existem duas possibilidades, injetar os dados diretamente no prompt (Crtl + C, C
 import json
 import pandas as pd
 
+# Configuração
+OLLAMA_URL = 'http://localhost:11434/api/generate'
+MODELO = 'gpt-oss'
+
 # Carregar dados
-perfil = json.load(open('./data/perfil_investidor.json'))
-transacoes = json.load(open('./data/transacoes.csv'))
-historico = json.load(open('./data/historico_atendimento.csv'))
-produtos = json.load(open('./data/produtos_financeiros.json'))
+perfil = json.load(open('./data/perfil_investidor.json', encoding='utf-8'))
+transacoes = pd.read_csv('./data/transacoes.csv')
+historico = pd.read_csv('./data/historico_atendimento.csv')
+produtos = json.load(open('./data/produtos_financeiros.json', encoding='utf-8'))
 ````
 
 ### Como os dados são usados no prompt?
-> Os dados vão no system prompt? São consultados dinamicamente?
 
 Para simplificar, podemos simplesmente "injetar" os dados em nosso prompt, garantindo que o agente tenha o melhor contexto possível. Lembrando que, em soluções mais robustas, o ideal é que essas informações sejam carregadas dinamicamente para que possamos ganhar flexibilidade.
 
@@ -137,8 +137,6 @@ PRODUTOS DISPONIVEIS PARA ENSINO (data/produtos_financeiros.json):
 ---
 
 ## Exemplo de Contexto Montado
-
-> Mostre um exemplo de como os dados são formatados para o agente.
 
 O exemplo de contexto montado abaixo, se baseia nos dados originais de base de conhecimento, mas os sintetiza deixando apenas as informações mais relevantes, otimizando assim o consumo de tokens. Entretanto, vale lembrar que mais importante do que economizar tokens, é ter todas as informações relevantes disponíveis em seu contexto.
 

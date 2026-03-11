@@ -1,149 +1,224 @@
-# 🤖 Agente Financeiro Inteligente com IA Generativa
+# 🤖 EduFin - Agente de Educação Financeira com IA
 
-## Contexto
+> Projeto desenvolvido como parte do curso "Bradesco Gen AI Data Course" na plataforma DIO (Digital Innovation One)
 
-Os assistentes virtuais no setor financeiro estão evoluindo de simples chatbots reativos para **agentes inteligentes e proativos**. Neste desafio, você vai idealizar e prototipar um agente financeiro que utiliza IA Generativa para:
+## 📚 Sobre o Projeto
 
-- **Antecipar necessidades** ao invés de apenas responder perguntas
-- **Personalizar** sugestões com base no contexto de cada cliente
-- **Cocriar soluções** financeiras de forma consultiva
-- **Garantir segurança** e confiabilidade nas respostas (anti-alucinação)
+Este projeto foi desenvolvido como desafio prático do bootcamp de IA Generativa oferecido pelo Bradesco em parceria com a DIO. O objetivo era criar um agente inteligente que auxiliasse usuários no contexto financeiro, utilizando tecnologias de IA Generativa.
 
-> [!TIP]
-> Na pasta [`examples/`](./examples/) você encontra referências de implementação para cada etapa deste desafio.
+Ao invés de criar apenas mais um consultor de investimentos, decidi focar em algo que considero mais necessário: **educação financeira acessível**. Muitas pessoas têm dificuldade em entender conceitos básicos como a diferença entre débito e crédito, o que é uma reserva de emergência, ou como funcionam diferentes tipos de investimento.
 
----
+### 💡 O Problema
 
-## O Que Você Deve Entregar
+A maioria dos brasileiros não teve educação financeira formal, o que gera:
+- Dificuldade em entender produtos financeiros básicos
+- Medo de investir por falta de conhecimento
+- Gastos desorganizados e falta de planejamento
+- Dependência de terceiros para decisões financeiras simples
 
-### 1. Documentação do Agente
+### ✨ A Solução: EduFin
 
-Defina **o que** seu agente faz e **como** ele funciona:
-
-- **Caso de Uso:** Qual problema financeiro ele resolve? (ex: consultoria de investimentos, planejamento de metas, alertas de gastos)
-- **Persona e Tom de Voz:** Como o agente se comporta e se comunica?
-- **Arquitetura:** Fluxo de dados e integração com a base de conhecimento
-- **Segurança:** Como evitar alucinações e garantir respostas confiáveis?
-
-📄 **Template:** [`docs/01-documentacao-agente.md`](./docs/01-documentacao-agente.md)
+**EduFin** é um agente educativo que:
+- ✅ Explica conceitos financeiros de forma simples e didática
+- ✅ Usa os dados do próprio cliente como exemplos práticos
+- ✅ NÃO faz recomendações de investimento (foca em educar)
+- ✅ Mantém um tom acessível e sem julgamentos
+- ✅ Admite quando não sabe algo (anti-alucinação)
 
 ---
 
-### 2. Base de Conhecimento
+## 🎯 Funcionalidades
 
-Utilize os **dados mockados** disponíveis na pasta [`data/`](./data/) para alimentar seu agente:
-
-| Arquivo | Formato | Descrição |
-|---------|---------|-----------|
-| `transacoes.csv` | CSV | Histórico de transações do cliente |
-| `historico_atendimento.csv` | CSV | Histórico de atendimentos anteriores |
-| `perfil_investidor.json` | JSON | Perfil e preferências do cliente |
-| `produtos_financeiros.json` | JSON | Produtos e serviços disponíveis |
-
-Você pode adaptar ou expandir esses dados conforme seu caso de uso.
-
-📄 **Template:** [`docs/02-base-conhecimento.md`](./docs/02-base-conhecimento.md)
+- **Explicações Contextualizadas**: Usa os dados reais do cliente para exemplificar conceitos
+- **Análise de Gastos Educativa**: Mostra padrões de consumo de forma didática
+- **Conceitos Financeiros**: Explica termos como CDI, Selic, CDB, Tesouro Direto, etc.
+- **Histórico de Conversas**: Mantém contexto de atendimentos anteriores
+- **Interface Amigável**: Chat interativo via Streamlit
 
 ---
 
-### 3. Prompts do Agente
+## 🏗️ Arquitetura
 
-Documente os prompts que definem o comportamento do seu agente:
+```mermaid
+flowchart TD
+    A[Usuário] -->|Pergunta| B[Interface Streamlit]
+    B --> C[System Prompt + Contexto]
+    C --> D[Ollama - LLM Local]
+    D --> E[Base de Conhecimento]
+    E -->|JSON/CSV| D
+    D --> F[Validação de Resposta]
+    F --> G[Resposta Educativa]
+    G --> B
+    B --> A
+```
 
-- **System Prompt:** Instruções gerais de comportamento e restrições
-- **Exemplos de Interação:** Cenários de uso com entrada e saída esperada
-- **Tratamento de Edge Cases:** Como o agente lida com situações limite
+### 🔧 Stack Tecnológico
 
-📄 **Template:** [`docs/03-prompts.md`](./docs/03-prompts.md)
-
----
-
-### 4. Aplicação Funcional
-
-Desenvolva um **protótipo funcional** do seu agente:
-
-- Chatbot interativo (sugestão: Streamlit, Gradio ou similar)
-- Integração com LLM (via API ou modelo local)
-- Conexão com a base de conhecimento
-
-📁 **Pasta:** [`src/`](./src/)
-
----
-
-### 5. Avaliação e Métricas
-
-Descreva como você avalia a qualidade do seu agente:
-
-**Métricas Sugeridas:**
-- Precisão/assertividade das respostas
-- Taxa de respostas seguras (sem alucinações)
-- Coerência com o perfil do cliente
-
-📄 **Template:** [`docs/04-metricas.md`](./docs/04-metricas.md)
+- **Frontend**: Streamlit (interface web interativa)
+- **LLM**: Ollama com modelo local `gpt-oss`
+- **Dados**: JSON + CSV (perfil, transações, histórico, produtos)
+- **Linguagem**: Python 3.x
 
 ---
 
-### 6. Pitch
-
-Grave um **pitch de 3 minutos** (estilo elevador) apresentando:
-
-- Qual problema seu agente resolve?
-- Como ele funciona na prática?
-- Por que essa solução é inovadora?
-
-📄 **Template:** [`docs/05-pitch.md`](./docs/05-pitch.md)
-
----
-
-## Ferramentas Sugeridas
-
-Todas as ferramentas abaixo possuem versões gratuitas:
-
-| Categoria | Ferramentas |
-|-----------|-------------|
-| **LLMs** | [ChatGPT](https://chat.openai.com/), [Copilot](https://copilot.microsoft.com/), [Gemini](https://gemini.google.com/), [Claude](https://claude.ai/), [Ollama](https://ollama.ai/) |
-| **Desenvolvimento** | [Streamlit](https://streamlit.io/), [Gradio](https://www.gradio.app/), [Google Colab](https://colab.research.google.com/) |
-| **Orquestração** | [LangChain](https://www.langchain.com/), [LangFlow](https://www.langflow.org/), [CrewAI](https://www.crewai.com/) |
-| **Diagramas** | [Mermaid](https://mermaid.js.org/), [Draw.io](https://app.diagrams.net/), [Excalidraw](https://excalidraw.com/) |
-
----
-
-## Estrutura do Repositório
+## 📂 Estrutura do Projeto
 
 ```
-📁 lab-agente-financeiro/
+dio-lab-bia-do-futuro/
 │
-├── 📄 README.md
+├── 📄 README.md                      # Este arquivo
 │
-├── 📁 data/                          # Dados mockados para o agente
-│   ├── historico_atendimento.csv     # Histórico de atendimentos (CSV)
-│   ├── perfil_investidor.json        # Perfil do cliente (JSON)
-│   ├── produtos_financeiros.json     # Produtos disponíveis (JSON)
-│   └── transacoes.csv                # Histórico de transações (CSV)
+├── 📁 data/                          # Base de conhecimento
+│   ├── historico_atendimento.csv     # Atendimentos anteriores
+│   ├── perfil_investidor.json        # Perfil do cliente (João Silva)
+│   ├── produtos_financeiros.json     # Produtos financeiros disponíveis
+│   └── transacoes.csv                # Histórico de transações
 │
-├── 📁 docs/                          # Documentação do projeto
+├── 📁 docs/                          # Documentação completa
 │   ├── 01-documentacao-agente.md     # Caso de uso e arquitetura
 │   ├── 02-base-conhecimento.md       # Estratégia de dados
 │   ├── 03-prompts.md                 # Engenharia de prompts
-│   ├── 04-metricas.md                # Avaliação e métricas
-│   └── 05-pitch.md                   # Roteiro do pitch
+│   └── 04-metricas.md                # Testes e avaliação
 │
-├── 📁 src/                           # Código da aplicação
-│   └── app.py                        # (exemplo de estrutura)
-│
-├── 📁 assets/                        # Imagens e diagramas
-│   └── ...
-│
-└── 📁 examples/                      # Referências e exemplos
-    └── README.md
+└── 📁 src/                           # Código fonte
+    ├── app.py                        # Aplicação Streamlit
+    └── requirements.txt              # Dependências Python
 ```
 
 ---
 
-## Dicas Finais
+## 🚀 Como Executar
 
-1. **Comece pelo prompt:** Um bom system prompt é a base de um agente eficaz
-2. **Use os dados mockados:** Eles garantem consistência e evitam problemas com dados sensíveis
-3. **Foque na segurança:** No setor financeiro, evitar alucinações é crítico
-4. **Teste cenários reais:** Simule perguntas que um cliente faria de verdade
-5. **Seja direto no pitch:** 3 minutos passam rápido, vá ao ponto
+### Pré-requisitos
+
+1. **Python 3.8+** instalado
+2. **Ollama** instalado e rodando localmente ([ollama.ai](https://ollama.ai))
+3. Modelo `gpt-oss` baixado no Ollama:
+   ```bash
+   ollama pull gpt-oss
+   ```
+
+### Instalação
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/dio-lab-bia-do-futuro.git
+   cd dio-lab-bia-do-futuro
+   ```
+
+2. Crie um ambiente virtual:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # No Windows: venv\Scripts\activate
+   ```
+
+3. Instale as dependências:
+   ```bash
+   pip install -r src/requirements.txt
+   ```
+
+4. Execute a aplicação:
+   ```bash
+   streamlit run src/app.py
+   ```
+
+5. Acesse no navegador: `http://localhost:8501`
+
+---
+
+## 💬 Exemplos de Uso
+
+### Exemplo 1: Explicando Conceitos
+**Você:** "O que é CDI?"
+
+**EduFin:** "O CDI (Certificado de Depósito Interbancário) é a taxa de juros praticada em empréstimos de curtíssimo prazo entre bancos. Funciona como a principal referência de rentabilidade para renda fixa no Brasil, como CDBs e LCIs. Ele acompanha de perto a Taxa Selic."
+
+### Exemplo 2: Análise Educativa de Gastos
+**Você:** "Onde estou gastando mais?"
+
+**EduFin:** "Olhando suas transações do último mês, sua maior despesa é moradia (R$1.380), seguida de alimentação (R$570). Juntas, representam quase 80% dos seus gastos. Isso é bem comum! Quer que eu explique algumas estratégias de organização?"
+
+### Exemplo 3: Limites Claros
+**Você:** "Onde devo investir meu dinheiro?"
+
+**EduFin:** "Não posso recomendar investimentos específicos, mas posso te explicar como cada tipo funciona! Por exemplo, você quer entender mais sobre renda fixa ou renda variável?"
+
+---
+
+## 📊 Base de Conhecimento
+
+O agente utiliza dados mockados de um cliente fictício (João Silva) para demonstrar funcionalidades:
+
+- **Perfil**: Analista de Sistemas, 32 anos, perfil moderado
+- **Objetivo**: Construir reserva de emergência e poupar para entrada de apartamento
+- **Renda**: R$ 5.000/mês
+- **Patrimônio**: R$ 15.000
+- **Produtos**: Tesouro Selic, CDB, LCI/LCA, Fundos Imobiliários
+
+Todos os dados estão em [data/](data/) e podem ser adaptados.
+
+---
+
+## 🎓 O Que Aprendi
+
+Este projeto me permitiu explorar:
+
+1. **Engenharia de Prompts**: Como criar instruções claras e eficazes para LLMs
+2. **RAG (Retrieval-Augmented Generation)**: Injetar contexto relevante no prompt
+3. **Ollama**: Rodar modelos de IA localmente, sem depender de APIs externas
+4. **Streamlit**: Criar interfaces web rapidamente com Python
+5. **Anti-Alucinação**: Técnicas para manter o agente dentro do escopo de conhecimento
+6. **UX para IA**: Como projetar interações naturais e úteis
+
+---
+
+## 🔒 Segurança e Limitações
+
+### Medidas de Segurança
+- ✅ O agente só usa dados fornecidos explicitamente
+- ✅ Admite quando não sabe algo
+- ✅ Não faz recomendações financeiras (apenas educação)
+- ✅ Não acessa dados sensíveis (senhas, tokens, etc.)
+
+### Limitações Conhecidas
+- ⚠️ Modelo local pode ter respostas mais lentas que APIs comerciais
+- ⚠️ Base de conhecimento limitada aos arquivos mockados
+- ⚠️ Não substitui um educador financeiro certificado
+- ⚠️ Interface básica (MVP para demonstração)
+
+---
+
+## 📖 Documentação Completa
+
+Para detalhes técnicos, consulte:
+
+- [📋 Documentação do Agente](docs/01-documentacao-agente.md) - Caso de uso e arquitetura
+- [💾 Base de Conhecimento](docs/02-base-conhecimento.md) - Como os dados são usados
+- [🎨 Prompts](docs/03-prompts.md) - Engenharia de prompts e exemplos
+- [📊 Métricas](docs/04-metricas.md) - Como avaliei o agente
+
+---
+
+## 🙏 Agradecimentos
+
+- **DIO (Digital Innovation One)** - pela plataforma e bootcamp
+- **Bradesco** - pelo patrocínio do curso
+- Instrutores e comunidade da DIO que compartilharam conhecimento
+
+---
+
+## 📝 Licença
+
+Este é um projeto educacional desenvolvido para fins de aprendizado. Sinta-se livre para usar como referência ou base para seus próprios projetos.
+
+---
+
+## 👤 Autor
+
+Desenvolvido como projeto de conclusão do Bradesco Gen AI Data Course na DIO.
+
+Se este projeto te ajudou de alguma forma, considere deixar uma ⭐ no repositório!
+
+---
+
+**⚠️ Aviso Legal**: Este é um projeto educacional. Não constitui consultoria financeira. Sempre busque orientação de profissionais certificados para decisões financeiras importantes.
