@@ -28,6 +28,7 @@ Existem duas possibilidades, injetar os dados diretamente no prompt (Crtl + C, C
 
 ````python
 import json
+import pandas as pd
 
 # Carregar dados
 perfil = json.load(open('./data/perfil_investidor.json'))
