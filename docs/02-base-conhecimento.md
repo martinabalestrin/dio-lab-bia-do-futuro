@@ -27,19 +27,13 @@ O produto Fundo Imobiliário (FII) substituiu o Fundo Multimercado.
 Existem duas possibilidades, injetar os dados diretamente no prompt (Crtl + C, Crtl + V) ou carregar os arquivos via código, como no exemplo abaixo:
 
 ````python
-import pandas as pd
 import json
 
-# CSV
-historico = pd.read_csv('data/historico_atendimento.csv')
-transacos = pd.read_csv('data/transacoes.csv')
-
-# JSON
-with open('data/perfil_investidor.json', 'r', encoding='utf-8') as f:
-    perfil = json.load(f)
-
-with open('data/produtos_financeiros.json', 'r', encoding='utf-8') as f:
-    produtos = json.load(f)
+# Carregar dados
+perfil = json.load(open('./data/perfil_investidor.json'))
+transacoes = json.load(open('./data/transacoes.csv'))
+historico = json.load(open('./data/historico_atendimento.csv'))
+produtos = json.load(open('./data/produtos_financeiros.json'))
 ````
 
 ### Como os dados são usados no prompt?
