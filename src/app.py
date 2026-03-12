@@ -63,7 +63,14 @@ def perguntar(msg):
         }
     )
 
-    return r.json()['response']
+    if r.status_code != 200:
+        return f"Erro API: {r.status_code}"
+
+    try:
+        return r.json()["response"]
+    except Exception:
+        print(r.text)
+        return "Erro ao interpretar resposta do modelo"
 
 # Criar Interface no Streamlit
 st.title("Olá, como posso te ajudar com finanças hoje?")
